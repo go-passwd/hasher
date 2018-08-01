@@ -73,7 +73,7 @@ passwordValidator := passwd.NewValidator(validator.MaxLength(10))
 Count occurrences of a chars and compares it with required value.
 
 ~~~go
-passwordValidator := passwd.NewValidator(validator.ContainsAtLeast(5, "abcdefghijklmnopqrstuvwxyz")
+passwordValidator := passwd.NewValidator(validator.ContainsAtLeast("abcdefghijklmnopqrstuvwxyz", 5)
 ~~~
 
 ## Hashers

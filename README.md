@@ -40,41 +40,11 @@ hashedPassword := hasher.String()
 
 ### Validate password
 
-~~~go
-import "github.com/tomi77/go-passwd/passwd/validator"
+Use [validator](https://github.com/go-passwd/validator)
 
-passwordValidator := passwd.NewValidator(validator.MinLength(5), validator.MaxLength(10))
-err := passwordValidator.Validate(form.Password)
-if err != nil {
-  panic(err)
-}
-~~~
+### Generate password
 
-## Validators
-
-### MinLength
-
-Check if password length is not lower that defined length.
-
-~~~go
-passwordValidator := passwd.NewValidator(validator.MinLength(5))
-~~~
-
-### MaxLength
-
-Check if password length is not greater that defined length.
-
-~~~go
-passwordValidator := passwd.NewValidator(validator.MaxLength(10))
-~~~
-
-### ContainsAtLeast
-
-Count occurrences of a chars and compares it with required value.
-
-~~~go
-passwordValidator := passwd.NewValidator(validator.ContainsAtLeast("abcdefghijklmnopqrstuvwxyz", 5)
-~~~
+Use [randomstring](https://github.com/go-randomstring/randomstring)
 
 ## Hashers
 

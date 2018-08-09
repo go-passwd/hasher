@@ -5,7 +5,7 @@ import (
 	"encoding/hex"
 	"fmt"
 
-	"github.com/tomi77/go-stringgen/randomstring"
+	randomstring "gopkg.in/randomstring.v1"
 )
 
 // SHA512_224Hasher hash password in SHA-512/224

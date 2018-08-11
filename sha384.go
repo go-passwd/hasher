@@ -17,7 +17,7 @@ type SHA384Hasher struct {
 
 // Code returns internal SHA-384 hasher code
 func (h SHA384Hasher) Code() string {
-	return "sha384"
+	return TypeSHA384
 }
 
 // Hash a password

@@ -17,7 +17,7 @@ type SHA1Hasher struct {
 
 // Code returns internal SHA-224 hasher code
 func (h SHA1Hasher) Code() string {
-	return "sha1"
+	return TypeSHA1
 }
 
 // Hash a password

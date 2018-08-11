@@ -23,6 +23,9 @@ import "github.com/tomi77/go-passwd/passwd"
 
 ~~~go
 correct, err := passwd.Check(form.Password, db.Password)
+hshr := hasher.New(hasher.TypeSHA512)
+hshr.SetPassword(plainTextPassword)
+hashedPassword := hshr.String()
 ~~~
 
 where
@@ -33,9 +36,6 @@ where
 ### Hash password
 
 ~~~go
-hasher := passwd.NewSHA512Hasher()
-hasher.SetPassword(plainTextPassword)
-hashedPassword := hasher.String()
 ~~~
 
 ### Validate password
@@ -53,7 +53,7 @@ Use [randomstring](https://github.com/go-randomstring/randomstring)
 Stored password as plain text.
 
 ~~~go
-passwordHasher := passwd.NewPlainHasher()
+passwordHasher := hasher.New(hasher.TypePlain)
 ~~~
 
 ### MD5Hasher
@@ -61,7 +61,7 @@ passwordHasher := passwd.NewPlainHasher()
 Store password as MD5 hash.
 
 ~~~go
-passwordHasher := passwd.NewMD5Hasher()
+passwordHasher := hasher.New(hasher.TypeMD5)
 ~~~
 
 ### SHA1Hasher
@@ -69,7 +69,7 @@ passwordHasher := passwd.NewMD5Hasher()
 Store password as SHA-1 hash.
 
 ~~~go
-passwordHasher := passwd.NewSHA1Hasher()
+passwordHasher := hasher.New(hasher.TypeSHA1)
 ~~~
 
 ### SHA224Hasher
@@ -77,7 +77,7 @@ passwordHasher := passwd.NewSHA1Hasher()
 Store password as SHA-224 hash.
 
 ~~~go
-passwordHasher := passwd.NewSHA224Hasher()
+passwordHasher := hasher.New(hasher.TypeSHA224)
 ~~~
 
 ### SHA256Hasher
@@ -85,7 +85,7 @@ passwordHasher := passwd.NewSHA224Hasher()
 Store password as SHA-256 hash.
 
 ~~~go
-passwordHasher := passwd.NewSHA256Hasher()
+passwordHasher := hasher.New(hasher.TypeSHA256)
 ~~~
 
 ### SHA384Hasher
@@ -93,7 +93,7 @@ passwordHasher := passwd.NewSHA256Hasher()
 Store password as SHA-384 hash.
 
 ~~~go
-passwordHasher := passwd.NewSHA384Hasher()
+passwordHasher := hasher.New(hasher.TypeSHA384)
 ~~~
 
 ### SHA512Hasher
@@ -101,7 +101,7 @@ passwordHasher := passwd.NewSHA384Hasher()
 Store password as SHA-512 hash.
 
 ~~~go
-passwordHasher := passwd.NewSHA512Hasher()
+passwordHasher := hasher.New(hasher.TypeSHA512)
 ~~~
 
 ### SHA512_224Hasher
@@ -109,7 +109,7 @@ passwordHasher := passwd.NewSHA512Hasher()
 Store password as SHA-512/224 hash.
 
 ~~~go
-passwordHasher := passwd.NewSHA512_224Hasher()
+passwordHasher := hasher.New(hasher.TypeSHA512_224)
 ~~~
 
 ### SHA512_256Hasher
@@ -117,5 +117,5 @@ passwordHasher := passwd.NewSHA512_224Hasher()
 Store password as SHA-512/256 hash.
 
 ~~~go
-passwordHasher := passwd.NewSHA512_256Hasher()
+passwordHasher := hasher.New(hasher.TypeSHA512_256)
 ~~~

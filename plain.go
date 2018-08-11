@@ -11,7 +11,7 @@ type PlainHasher struct {
 
 // Code returns internal plain hasher code
 func (h PlainHasher) Code() string {
-	return "plain"
+	return TypePlain
 }
 
 // Hash a password

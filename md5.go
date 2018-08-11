@@ -17,7 +17,7 @@ type MD5Hasher struct {
 
 // Code returns internal MD5 hasher code
 func (h MD5Hasher) Code() string {
-	return "md5"
+	return TypeMD5
 }
 
 // Hash a password

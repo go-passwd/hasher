@@ -17,7 +17,7 @@ type SHA512_224Hasher struct {
 
 // Code returns internal SHA-512/224 hasher code
 func (h SHA512_224Hasher) Code() string {
-	return "sha512_224"
+	return TypeSHA512_224
 }
 
 // Hash a password

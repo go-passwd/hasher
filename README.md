@@ -1,14 +1,14 @@
 # Password hasher library for Go
 
-[![Build Status](https://travis-ci.org/tomi77/go-passwd.svg?branch=master)](https://travis-ci.org/tomi77/go-passwd)
-[![Coverage Status](https://coveralls.io/repos/github/tomi77/go-passwd/badge.svg?branch=master)](https://coveralls.io/github/tomi77/go-passwd?branch=master)
-[![Go Report Card](https://goreportcard.com/badge/github.com/tomi77/go-passwd)](https://goreportcard.com/report/github.com/tomi77/go-passwd)
-[![GoDoc](https://godoc.org/github.com/tomi77/go-passwd/passwd?status.svg)](https://godoc.org/github.com/tomi77/go-passwd/passwd)
+[![Build Status](https://travis-ci.org/go-passwd/hasher.svg?branch=master)](https://travis-ci.org/go-passwd/hasher)
+[![Coverage Status](https://coveralls.io/repos/github/go-passwd/hasher/badge.svg?branch=master)](https://coveralls.io/github/go-passwd/hasher?branch=master)
+[![Go Report Card](https://goreportcard.com/badge/github.com/go-passwd/hasher)](https://goreportcard.com/report/github.com/go-passwd/hasher)
+[![GoDoc](https://godoc.org/github.com/go-passwd/hasher?status.svg)](https://godoc.org/github.com/go-passwd/hasher)
 
 ## Installation
 
 ~~~sh
-go get -u github.com/tomi77/go-passwd/passwd
+go get -u github.com/go-passwd/hasher
 ~~~
 
 ## Usage

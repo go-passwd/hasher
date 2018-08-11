@@ -50,8 +50,8 @@ type Hasher interface {
 	String() string
 }
 
-// NewHasherFromString returns a new Hasher object who is based on string representation of a hasher (e.x. from database)
-func NewHasherFromString(password string) (Hasher, error) {
+// NewFromString returns a new Hasher object who is based on string representation of a hasher (e.x. from database)
+func NewFromString(password string) (Hasher, error) {
 	p := strings.Split(password, "$")
 	switch p[0] {
 	case PlainHasher{}.Code():

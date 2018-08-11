@@ -1,11 +1,9 @@
-# go-passwd
+# Password hasher library for Go
 
 [![Build Status](https://travis-ci.org/tomi77/go-passwd.svg?branch=master)](https://travis-ci.org/tomi77/go-passwd)
 [![Coverage Status](https://coveralls.io/repos/github/tomi77/go-passwd/badge.svg?branch=master)](https://coveralls.io/github/tomi77/go-passwd?branch=master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/tomi77/go-passwd)](https://goreportcard.com/report/github.com/tomi77/go-passwd)
 [![GoDoc](https://godoc.org/github.com/tomi77/go-passwd/passwd?status.svg)](https://godoc.org/github.com/tomi77/go-passwd/passwd)
-
-Password library for Go
 
 ## Installation
 
@@ -16,35 +14,10 @@ go get -u github.com/tomi77/go-passwd/passwd
 ## Usage
 
 ~~~go
-import "github.com/tomi77/go-passwd/passwd"
-~~~
-
-### Check password
-
-~~~go
-correct, err := passwd.Check(form.Password, db.Password)
 hshr := hasher.New(hasher.TypeSHA512)
 hshr.SetPassword(plainTextPassword)
 hashedPassword := hshr.String()
 ~~~
-
-where
-
-* ``form.Password`` is a password from form
-* ``db.Password`` is a password from DB
-
-### Hash password
-
-~~~go
-~~~
-
-### Validate password
-
-Use [validator](https://github.com/go-passwd/validator)
-
-### Generate password
-
-Use [randomstring](https://github.com/go-randomstring/randomstring)
 
 ## Hashers
 

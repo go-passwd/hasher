@@ -1,6 +1,7 @@
 package hasher
 
 import (
+	"bytes"
 	"crypto/sha512"
 	"encoding/hex"
 	"fmt"
@@ -12,7 +13,7 @@ import (
 type SHA512_256Hasher struct {
 	Salt     *string
 	Iter     *int
-	Password *string
+	Password *[]byte
 }
 
 // Code returns internal SHA-512/256 hasher code
@@ -21,7 +22,7 @@ func (h SHA512_256Hasher) Code() string {
 }
 
 // Hash a password
-func (h *SHA512_256Hasher) Hash(password string) string {
+func (h *SHA512_256Hasher) Hash(password string) []byte {
 	if h.Salt == nil {
 		salt := randomstring.Generate(DefaultSaltLength)
 		h.Salt = &salt
@@ -39,7 +40,7 @@ func (h *SHA512_256Hasher) Hash(password string) string {
 		bPassword = s.Sum(nil)
 	}
 
-	return hex.EncodeToString(bPassword)
+	return bPassword
 }
 
 // SetPassword sets a password
@@ -50,9 +51,9 @@ func (h *SHA512_256Hasher) SetPassword(plain string) {
 
 // Check if hashed password is equal stored password hash
 func (h *SHA512_256Hasher) Check(plain string) bool {
-	return h.Hash(plain) == *h.Password
+	return bytes.Compare(h.Hash(plain), *h.Password) == 0
 }
 
 func (h *SHA512_256Hasher) String() string {
-	return fmt.Sprintf("%s$%d$%s$%s", h.Code(), *h.Iter, *h.Salt, *h.Password)
+	return fmt.Sprintf("%s$%d$%s$%s", h.Code(), *h.Iter, *h.Salt, hex.EncodeToString(*h.Password))
 }

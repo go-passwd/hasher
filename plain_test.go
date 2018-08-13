@@ -7,7 +7,7 @@ import (
 )
 
 func TestPlainHasher_String(t *testing.T) {
-	password := "password"
+	password := []byte("password")
 	h := PlainHasher{&password}
 
 	w := "plain$password"
@@ -16,7 +16,7 @@ func TestPlainHasher_String(t *testing.T) {
 }
 
 func TestPlainHasher_Check(t *testing.T) {
-	password := "password"
+	password := []byte("password")
 	h := PlainHasher{&password}
 
 	check := h.Check("password")
@@ -30,7 +30,7 @@ func TestPlainHasher_Hash(t *testing.T) {
 	h := PlainHasher{}
 
 	g := h.Hash("password")
-	assert.Equal(t, "password", g)
+	assert.Equal(t, []byte("password"), g)
 }
 
 func TestPlainHasher_SetPassword(t *testing.T) {

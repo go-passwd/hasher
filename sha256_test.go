@@ -9,10 +9,10 @@ import (
 func TestSHA256Hasher_String(t *testing.T) {
 	salt := "salt"
 	iter := 1
-	password := "password"
+	password := []byte("password")
 	h := SHA256Hasher{Salt: &salt, Iter: &iter, Password: &password}
 
-	w := "sha256$1$salt$password"
+	w := "sha256$1$salt$70617373776f7264"
 	g := h.String()
 	assert.Equal(t, w, g)
 }
@@ -20,7 +20,7 @@ func TestSHA256Hasher_String(t *testing.T) {
 func TestSHA256Hasher_Check(t *testing.T) {
 	salt := "salt"
 	iter := 1
-	password := "13601bda4ea78e55a07b98866d2be6be0744e3866f13c00c811cab608a28f322"
+	password := []byte{0x13, 0x60, 0x1b, 0xda, 0x4e, 0xa7, 0x8e, 0x55, 0xa0, 0x7b, 0x98, 0x86, 0x6d, 0x2b, 0xe6, 0xbe, 0x7, 0x44, 0xe3, 0x86, 0x6f, 0x13, 0xc0, 0xc, 0x81, 0x1c, 0xab, 0x60, 0x8a, 0x28, 0xf3, 0x22}
 	h := SHA256Hasher{Salt: &salt, Iter: &iter, Password: &password}
 
 	check := h.Check("password")
@@ -33,7 +33,7 @@ func TestSHA256Hasher_Check(t *testing.T) {
 func TestSHA256Hasher_Hash(t *testing.T) {
 	salt := "salt"
 	iter := 1
-	password := "13601bda4ea78e55a07b98866d2be6be0744e3866f13c00c811cab608a28f322"
+	password := []byte{0x13, 0x60, 0x1b, 0xda, 0x4e, 0xa7, 0x8e, 0x55, 0xa0, 0x7b, 0x98, 0x86, 0x6d, 0x2b, 0xe6, 0xbe, 0x7, 0x44, 0xe3, 0x86, 0x6f, 0x13, 0xc0, 0xc, 0x81, 0x1c, 0xab, 0x60, 0x8a, 0x28, 0xf3, 0x22}
 	h := SHA256Hasher{Salt: &salt, Iter: &iter}
 
 	g := h.Hash("password")

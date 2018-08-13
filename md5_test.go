@@ -9,10 +9,10 @@ import (
 func TestMD5Hasher_String(t *testing.T) {
 	salt := "salt"
 	iter := 1
-	password := "password"
+	password := []byte("password")
 	h := MD5Hasher{Salt: &salt, Iter: &iter, Password: &password}
 
-	w := "md5$1$salt$password"
+	w := "md5$1$salt$70617373776f7264"
 	g := h.String()
 	assert.Equal(t, w, g)
 }
@@ -20,7 +20,7 @@ func TestMD5Hasher_String(t *testing.T) {
 func TestMD5Hasher_Check(t *testing.T) {
 	salt := "salt"
 	iter := 1
-	password := "67a1e09bb1f83f5007dc119c14d663aa"
+	password := []byte{0x67, 0xa1, 0xe0, 0x9b, 0xb1, 0xf8, 0x3f, 0x50, 0x07, 0xdc, 0x11, 0x9c, 0x14, 0xd6, 0x63, 0xaa}
 	h := MD5Hasher{Salt: &salt, Iter: &iter, Password: &password}
 
 	check := h.Check("password")
@@ -33,7 +33,7 @@ func TestMD5Hasher_Check(t *testing.T) {
 func TestMD5Hasher_Hash(t *testing.T) {
 	salt := "salt"
 	iter := 1
-	password := "67a1e09bb1f83f5007dc119c14d663aa"
+	password := []byte{0x67, 0xa1, 0xe0, 0x9b, 0xb1, 0xf8, 0x3f, 0x50, 0x07, 0xdc, 0x11, 0x9c, 0x14, 0xd6, 0x63, 0xaa}
 	h := MD5Hasher{Salt: &salt, Iter: &iter}
 
 	g := h.Hash("password")

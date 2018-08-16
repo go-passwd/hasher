@@ -38,11 +38,13 @@ const (
 
 // Hasher interface
 type Hasher interface {
-	// Code returns internal hasher code
+	// Code returns internal hasher code (go-passwd/marshaler)
 	Code() string
 
+	// Hash password
 	Hash(string) []byte
 
+	// SetPassword
 	SetPassword(string)
 
 	Check(string) bool

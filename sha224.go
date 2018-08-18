@@ -6,7 +6,7 @@ import (
 	"encoding/hex"
 	"fmt"
 
-	randomstring "gopkg.in/randomstring.v1"
+	randomstring "gopkg.in/go-passwd/randomstring.v1"
 )
 
 // SHA224Hasher hash password in SHA-224

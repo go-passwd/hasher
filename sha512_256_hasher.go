@@ -2,27 +2,27 @@ package hasher
 
 import (
 	"bytes"
-	"crypto/sha256"
-	"encoding/hex"
-	"fmt"
+	"crypto/sha512"
 
 	randomstring "gopkg.in/go-passwd/randomstring.v1"
 )
 
-// SHA256Hasher hash password in SHA256
-type SHA256Hasher struct {
+// SHA512_256Hasher hash password in SHA-512/256
+type SHA512_256Hasher struct {
 	Salt     *string
 	Iter     *int
 	Password *[]byte
+
+	Marshaler Marshaler
 }
 
-// Code returns internal SHA-224 hasher code
-func (h SHA256Hasher) Code() string {
-	return TypeSHA256
+// Code returns internal SHA-512/256 hasher code
+func (h SHA512_256Hasher) Code() string {
+	return TypeSHA512_256
 }
 
 // Hash a password
-func (h *SHA256Hasher) Hash(password string) []byte {
+func (h *SHA512_256Hasher) Hash(password string) []byte {
 	if h.Salt == nil {
 		salt := randomstring.Generate(DefaultSaltLength)
 		h.Salt = &salt
@@ -35,7 +35,7 @@ func (h *SHA256Hasher) Hash(password string) []byte {
 
 	bPassword := []byte(*h.Salt + password)
 	for i := 0; i < *h.Iter; i++ {
-		s := sha256.New()
+		s := sha512.New512_256()
 		s.Write(bPassword)
 		bPassword = s.Sum(nil)
 	}
@@ -44,16 +44,20 @@ func (h *SHA256Hasher) Hash(password string) []byte {
 }
 
 // SetPassword sets a password
-func (h *SHA256Hasher) SetPassword(plain string) {
+func (h *SHA512_256Hasher) SetPassword(plain string) {
 	hash := h.Hash(plain)
 	h.Password = &hash
 }
 
 // Check if hashed password is equal stored password hash
-func (h *SHA256Hasher) Check(plain string) bool {
+func (h *SHA512_256Hasher) Check(plain string) bool {
 	return bytes.Compare(h.Hash(plain), *h.Password) == 0
 }
 
-func (h *SHA256Hasher) String() string {
-	return fmt.Sprintf("%s$%d$%s$%s", h.Code(), *h.Iter, *h.Salt, hex.EncodeToString(*h.Password))
+func (h *SHA512_256Hasher) String() string {
+	if h.Marshaler == nil {
+		panic("marshaler is not set")
+	}
+	s, _ := h.Marshaler.Marshal(h)
+	return s
 }

@@ -3,26 +3,26 @@ package hasher
 import (
 	"bytes"
 	"crypto/sha512"
-	"encoding/hex"
-	"fmt"
 
 	randomstring "gopkg.in/go-passwd/randomstring.v1"
 )
 
-// SHA512Hasher hash password in SHA-512
-type SHA512Hasher struct {
+// SHA384Hasher hash password in SHA-384
+type SHA384Hasher struct {
 	Salt     *string
 	Iter     *int
 	Password *[]byte
+
+	Marshaler Marshaler
 }
 
-// Code returns internal SHA-512 hasher code
-func (h SHA512Hasher) Code() string {
-	return TypeSHA512
+// Code returns internal SHA-384 hasher code
+func (h SHA384Hasher) Code() string {
+	return TypeSHA384
 }
 
 // Hash a password
-func (h *SHA512Hasher) Hash(password string) []byte {
+func (h *SHA384Hasher) Hash(password string) []byte {
 	if h.Salt == nil {
 		salt := randomstring.Generate(DefaultSaltLength)
 		h.Salt = &salt
@@ -35,7 +35,7 @@ func (h *SHA512Hasher) Hash(password string) []byte {
 
 	bPassword := []byte(*h.Salt + password)
 	for i := 0; i < *h.Iter; i++ {
-		s := sha512.New()
+		s := sha512.New384()
 		s.Write(bPassword)
 		bPassword = s.Sum(nil)
 	}
@@ -44,16 +44,20 @@ func (h *SHA512Hasher) Hash(password string) []byte {
 }
 
 // SetPassword sets a password
-func (h *SHA512Hasher) SetPassword(plain string) {
+func (h *SHA384Hasher) SetPassword(plain string) {
 	hash := h.Hash(plain)
 	h.Password = &hash
 }
 
 // Check if hashed password is equal stored password hash
-func (h *SHA512Hasher) Check(plain string) bool {
+func (h *SHA384Hasher) Check(plain string) bool {
 	return bytes.Compare(h.Hash(plain), *h.Password) == 0
 }
 
-func (h *SHA512Hasher) String() string {
-	return fmt.Sprintf("%s$%d$%s$%s", h.Code(), *h.Iter, *h.Salt, hex.EncodeToString(*h.Password))
+func (h *SHA384Hasher) String() string {
+	if h.Marshaler == nil {
+		panic("marshaler is not set")
+	}
+	s, _ := h.Marshaler.Marshal(h)
+	return s
 }

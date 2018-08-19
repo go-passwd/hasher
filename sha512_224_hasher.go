@@ -3,8 +3,6 @@ package hasher
 import (
 	"bytes"
 	"crypto/sha512"
-	"encoding/hex"
-	"fmt"
 
 	randomstring "gopkg.in/go-passwd/randomstring.v1"
 )
@@ -14,6 +12,8 @@ type SHA512_224Hasher struct {
 	Salt     *string
 	Iter     *int
 	Password *[]byte
+
+	Marshaler Marshaler
 }
 
 // Code returns internal SHA-512/224 hasher code
@@ -55,5 +55,9 @@ func (h *SHA512_224Hasher) Check(plain string) bool {
 }
 
 func (h *SHA512_224Hasher) String() string {
-	return fmt.Sprintf("%s$%d$%s$%s", h.Code(), *h.Iter, *h.Salt, hex.EncodeToString(*h.Password))
+	if h.Marshaler == nil {
+		panic("marshaler is not set")
+	}
+	s, _ := h.Marshaler.Marshal(h)
+	return s
 }

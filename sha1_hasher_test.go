@@ -10,11 +10,16 @@ func TestSHA1Hasher_String(t *testing.T) {
 	salt := "salt"
 	iter := 1
 	password := []byte("password")
-	h := SHA1Hasher{Salt: &salt, Iter: &iter, Password: &password}
+	h := SHA1Hasher{Salt: &salt, Iter: &iter, Password: &password, Marshaler: &DjangoMarshaler}
 
 	w := "sha1$1$salt$70617373776f7264"
 	g := h.String()
 	assert.Equal(t, w, g)
+
+	h = SHA1Hasher{Salt: &salt, Iter: &iter, Password: &password}
+	assert.Panics(t, assert.PanicTestFunc(func() {
+		_ = h.String()
+	}))
 }
 
 func TestSHA1Hasher_Check(t *testing.T) {

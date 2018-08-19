@@ -2,12 +2,13 @@ package hasher
 
 import (
 	"bytes"
-	"fmt"
 )
 
 // PlainHasher stored password as plain text
 type PlainHasher struct {
 	Password *[]byte
+
+	Marshaler Marshaler
 }
 
 // Code returns internal plain hasher code
@@ -32,5 +33,9 @@ func (h *PlainHasher) Check(plain string) bool {
 }
 
 func (h *PlainHasher) String() string {
-	return fmt.Sprintf("%s$%s", h.Code(), string(*h.Password))
+	if h.Marshaler == nil {
+		panic("marshaler is not set")
+	}
+	s, _ := h.Marshaler.Marshal(h)
+	return s
 }

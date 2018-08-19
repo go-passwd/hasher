@@ -10,11 +10,16 @@ func TestMD5Hasher_String(t *testing.T) {
 	salt := "salt"
 	iter := 1
 	password := []byte("password")
-	h := MD5Hasher{Salt: &salt, Iter: &iter, Password: &password}
+	h := MD5Hasher{Salt: &salt, Iter: &iter, Password: &password, Marshaler: &DjangoMarshaler}
 
 	w := "md5$1$salt$70617373776f7264"
 	g := h.String()
 	assert.Equal(t, w, g)
+
+	h = MD5Hasher{Salt: &salt, Iter: &iter, Password: &password}
+	assert.Panics(t, assert.PanicTestFunc(func() {
+		_ = h.String()
+	}))
 }
 
 func TestMD5Hasher_Check(t *testing.T) {

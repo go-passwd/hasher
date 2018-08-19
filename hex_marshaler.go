@@ -125,55 +125,64 @@ func (m *HexMarshaler) Unmarshal(s string) (Hasher, error) {
 	switch submatch[1] {
 	case TypePlain:
 		return &PlainHasher{
-			Password: &password,
+			Password:  &password,
+			Marshaler: m,
 		}, nil
 	case TypeMD5:
 		return &MD5Hasher{
-			Iter:     &iter,
-			Salt:     &submatch[3],
-			Password: &password,
+			Iter:      &iter,
+			Salt:      &submatch[3],
+			Password:  &password,
+			Marshaler: m,
 		}, nil
 	case TypeSHA1:
 		return &SHA1Hasher{
-			Iter:     &iter,
-			Salt:     &submatch[3],
-			Password: &password,
+			Iter:      &iter,
+			Salt:      &submatch[3],
+			Password:  &password,
+			Marshaler: m,
 		}, nil
 	case TypeSHA224:
 		return &SHA224Hasher{
-			Iter:     &iter,
-			Salt:     &submatch[3],
-			Password: &password,
+			Iter:      &iter,
+			Salt:      &submatch[3],
+			Password:  &password,
+			Marshaler: m,
 		}, nil
 	case TypeSHA256:
 		return &SHA256Hasher{
-			Iter:     &iter,
-			Salt:     &submatch[3],
-			Password: &password,
+			Iter:      &iter,
+			Salt:      &submatch[3],
+			Password:  &password,
+			Marshaler: m,
 		}, nil
 	case TypeSHA384:
 		return &SHA384Hasher{
-			Iter:     &iter,
-			Salt:     &submatch[3],
-			Password: &password,
+			Iter:      &iter,
+			Salt:      &submatch[3],
+			Password:  &password,
+			Marshaler: m,
 		}, nil
 	case TypeSHA512:
 		return &SHA512Hasher{
-			Iter:     &iter,
-			Salt:     &submatch[3],
-			Password: &password,
+			Iter:      &iter,
+			Salt:      &submatch[3],
+			Password:  &password,
+			Marshaler: m,
 		}, nil
 	case TypeSHA512_224:
 		return &SHA512_224Hasher{
-			Iter:     &iter,
-			Salt:     &submatch[3],
-			Password: &password,
+			Iter:      &iter,
+			Salt:      &submatch[3],
+			Password:  &password,
+			Marshaler: m,
 		}, nil
 	case TypeSHA512_256:
 		return &SHA512_256Hasher{
-			Iter:     &iter,
-			Salt:     &submatch[3],
-			Password: &password,
+			Iter:      &iter,
+			Salt:      &submatch[3],
+			Password:  &password,
+			Marshaler: m,
 		}, nil
 	default:
 		return nil, fmt.Errorf("unsupported hasher %s", submatch[1])

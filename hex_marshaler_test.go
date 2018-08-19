@@ -25,8 +25,6 @@ const (
 )
 
 var m = HexMarshaler{
-	// Template: "{{.Code}}${{.Iterations}}${{.Salt}}${{.Password}}",
-	// Pattern:   "^(\\w+)\\$(\\d+)\\$(\\w*)\\$(\\w+)$",
 	Separator: "$",
 }
 
@@ -156,30 +154,6 @@ func TestHexMarshaler_Unmarshal_sha512_256(t *testing.T) {
 	assert.True(t, h.Check(password))
 }
 
-func TestHexMarshaler_Marshal_error(t *testing.T) {
-	// m := HexMarshaler{
-	// 	// Template: "{{printq \"q\"}}",
-	// 	Pattern:   "^(\\w+)\\$(\\d+)\\$(\\w*)\\$(\\w+)$",
-	// 	Separator: "$",
-	// }
-	// h := SHA512Hasher{Iter: &iter, Salt: &salt}
-	// h.SetPassword(password)
-	// s, err := m.Marshal(&h)
-	// assert.NotNil(t, err)
-	// assert.Empty(t, s)
-
-	// m := HexMarshaler{
-	// 	// Template: "{{.Code}}${{.Iter}}${{.Salt}}${{.Password}}",
-	// 	Pattern:   "^(\\w+)\\$(\\d+)\\$(\\w*)\\$(\\w+)$",
-	// 	Separator: "$",
-	// }
-	// h := SHA512Hasher{Iter: &iter, Salt: &salt}
-	// h.SetPassword(password)
-	// s, err := m.Marshal(&h)
-	// assert.NotNil(t, err)
-	// assert.Empty(t, s)
-}
-
 func TestHexMarshaler_Unmarshal_error(t *testing.T) {
 	m := HexMarshaler{
 		Separator: ":",
@@ -187,13 +161,6 @@ func TestHexMarshaler_Unmarshal_error(t *testing.T) {
 	h, err := m.Unmarshal(passwordSHA512)
 	assert.NotNil(t, err)
 	assert.Nil(t, h)
-
-	// m = HexMarshaler{
-	// 	Separator: "$",
-	// }
-	// h, err = m.Unmarshal(passwordSHA512)
-	// assert.NotNil(t, err)
-	// assert.Nil(t, h)
 
 	m = HexMarshaler{
 		Separator: "$",

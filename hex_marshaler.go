@@ -10,8 +10,6 @@ import (
 
 // HexMarshaler stores password in HEX
 type HexMarshaler struct {
-	// Template string
-	// Pattern   string
 	Separator string
 }
 

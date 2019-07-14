@@ -59,26 +59,55 @@ type Hasher interface {
 	String() string
 }
 
+// NewHasherFunc describes function that returns new hasher
+type NewHasherFunc func() Hasher
+
+var (
+	// Internal map of registered hashers
+	registeredHashers = map[string]NewHasherFunc{
+		TypePlain: NewHasherFunc(func() Hasher {
+			return &PlainHasher{}
+		}),
+		TypeMD5: NewHasherFunc(func() Hasher {
+			return &MD5Hasher{}
+		}),
+		TypeSHA1: NewHasherFunc(func() Hasher {
+			return &SHA1Hasher{}
+		}),
+		TypeSHA224: NewHasherFunc(func() Hasher {
+			return &SHA224Hasher{}
+		}),
+		TypeSHA256: NewHasherFunc(func() Hasher {
+			return &SHA256Hasher{}
+		}),
+		TypeSHA384: NewHasherFunc(func() Hasher {
+			return &SHA384Hasher{}
+		}),
+		TypeSHA512: NewHasherFunc(func() Hasher {
+			return &SHA512Hasher{}
+		}),
+		TypeSHA512_224: NewHasherFunc(func() Hasher {
+			return &SHA512_224Hasher{}
+		}),
+		TypeSHA512_256: NewHasherFunc(func() Hasher {
+			return &SHA512_256Hasher{}
+		}),
+	}
+)
+
+// Register a new hasher
+func Register(code string, hshr NewHasherFunc) error {
+	if registeredHashers[code] != nil {
+		return fmt.Errorf("hasher %s already registered", code)
+	}
+	registeredHashers[code] = hshr
+	return nil
+}
+
 // New returns new hasher of type hasherType
 func New(hasherType string) (Hasher, error) {
-	if hasherType == TypePlain {
-		return &PlainHasher{}, nil
-	} else if hasherType == TypeMD5 {
-		return &MD5Hasher{}, nil
-	} else if hasherType == TypeSHA1 {
-		return &SHA1Hasher{}, nil
-	} else if hasherType == TypeSHA224 {
-		return &SHA224Hasher{}, nil
-	} else if hasherType == TypeSHA256 {
-		return &SHA256Hasher{}, nil
-	} else if hasherType == TypeSHA384 {
-		return &SHA384Hasher{}, nil
-	} else if hasherType == TypeSHA512 {
-		return &SHA512Hasher{}, nil
-	} else if hasherType == TypeSHA512_224 {
-		return &SHA512_224Hasher{}, nil
-	} else if hasherType == TypeSHA512_256 {
-		return &SHA512_256Hasher{}, nil
+	if registeredHashers[hasherType] != nil {
+		return registeredHashers[hasherType](), nil
 	}
 	return nil, fmt.Errorf("Unsupported hasher %s", hasherType)
 }

@@ -6,6 +6,8 @@ import (
 
 // PlainHasher stored password as plain text
 type PlainHasher struct {
+	Salt     *string // Not used
+	Iter     *int    // Not used
 	Password *[]byte
 }
 

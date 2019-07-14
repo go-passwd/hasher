@@ -55,6 +55,7 @@ type Hasher interface {
 
 	Check(string) bool
 
+	// String representation of hashed password
 	String() string
 }
 

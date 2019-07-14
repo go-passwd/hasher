@@ -7,22 +7,22 @@ import (
 )
 
 func TestPlainHasher_String(t *testing.T) {
-	password := []byte("password")
-	h := PlainHasher{Password: &password, Marshaler: &DjangoMarshaler}
+	h := PlainHasher{}
+	h.SetPassword("password")
 
-	w := "plain$0$$70617373776f7264"
+	w := "password"
 	g := h.String()
 	assert.Equal(t, w, g)
 
-	h = PlainHasher{Password: &password}
+	h = PlainHasher{}
 	assert.Panics(t, assert.PanicTestFunc(func() {
 		_ = h.String()
 	}))
 }
 
 func TestPlainHasher_Check(t *testing.T) {
-	password := []byte("password")
-	h := PlainHasher{Password: &password, Marshaler: &DjangoMarshaler}
+	h := PlainHasher{}
+	h.SetPassword("password")
 
 	check := h.Check("password")
 	assert.Truef(t, check, "Passwords are equal")

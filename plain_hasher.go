@@ -7,8 +7,6 @@ import (
 // PlainHasher stored password as plain text
 type PlainHasher struct {
 	Password *[]byte
-
-	Marshaler Marshaler
 }
 
 // Code returns internal plain hasher code
@@ -33,9 +31,8 @@ func (h *PlainHasher) Check(plain string) bool {
 }
 
 func (h *PlainHasher) String() string {
-	if h.Marshaler == nil {
-		panic("marshaler is not set")
+	if h.Password == nil {
+		panic("password is not set")
 	}
-	s, _ := h.Marshaler.Marshal(h)
-	return s
+	return string(*h.Password)
 }

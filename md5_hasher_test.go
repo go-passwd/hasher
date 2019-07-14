@@ -9,14 +9,14 @@ import (
 func TestMD5Hasher_String(t *testing.T) {
 	salt := "salt"
 	iter := 1
-	password := []byte("password")
-	h := MD5Hasher{Salt: &salt, Iter: &iter, Password: &password, Marshaler: &DjangoMarshaler}
+	h := MD5Hasher{Salt: &salt, Iter: &iter}
+	h.SetPassword("password")
 
-	w := "md5$1$salt$70617373776f7264"
+	w := string([]byte{0x67, 0xa1, 0xe0, 0x9b, 0xb1, 0xf8, 0x3f, 0x50, 0x07, 0xdc, 0x11, 0x9c, 0x14, 0xd6, 0x63, 0xaa})
 	g := h.String()
 	assert.Equal(t, w, g)
 
-	h = MD5Hasher{Salt: &salt, Iter: &iter, Password: &password}
+	h = MD5Hasher{Salt: &salt, Iter: &iter}
 	assert.Panics(t, assert.PanicTestFunc(func() {
 		_ = h.String()
 	}))
@@ -25,8 +25,8 @@ func TestMD5Hasher_String(t *testing.T) {
 func TestMD5Hasher_Check(t *testing.T) {
 	salt := "salt"
 	iter := 1
-	password := []byte{0x67, 0xa1, 0xe0, 0x9b, 0xb1, 0xf8, 0x3f, 0x50, 0x07, 0xdc, 0x11, 0x9c, 0x14, 0xd6, 0x63, 0xaa}
-	h := MD5Hasher{Salt: &salt, Iter: &iter, Password: &password}
+	h := MD5Hasher{Salt: &salt, Iter: &iter}
+	h.SetPassword("password")
 
 	check := h.Check("password")
 	assert.Truef(t, check, "Passwords are equal")

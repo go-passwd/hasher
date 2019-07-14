@@ -12,8 +12,6 @@ type SHA224Hasher struct {
 	Salt     *string
 	Iter     *int
 	Password *[]byte
-
-	Marshaler Marshaler
 }
 
 // Code returns internal SHA-224 hasher code
@@ -55,9 +53,8 @@ func (h *SHA224Hasher) Check(plain string) bool {
 }
 
 func (h *SHA224Hasher) String() string {
-	if h.Marshaler == nil {
-		panic("marshaler is not set")
+	if h.Password == nil {
+		panic("password is not set")
 	}
-	s, _ := h.Marshaler.Marshal(h)
-	return s
+	return string(*h.Password)
 }

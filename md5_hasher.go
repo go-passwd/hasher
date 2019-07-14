@@ -12,8 +12,6 @@ type MD5Hasher struct {
 	Salt     *string
 	Iter     *int
 	Password *[]byte
-
-	Marshaler Marshaler
 }
 
 // Code returns internal MD5 hasher code
@@ -55,9 +53,8 @@ func (h *MD5Hasher) Check(plain string) bool {
 }
 
 func (h *MD5Hasher) String() string {
-	if h.Marshaler == nil {
-		panic("marshaler is not set")
+	if h.Password == nil {
+		panic("password is not set")
 	}
-	s, _ := h.Marshaler.Marshal(h)
-	return s
+	return string(*h.Password)
 }

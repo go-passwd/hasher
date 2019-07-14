@@ -9,14 +9,14 @@ import (
 func TestSHA512_224Hasher_String(t *testing.T) {
 	salt := "salt"
 	iter := 1
-	password := []byte("password")
-	h := SHA512_224Hasher{Salt: &salt, Iter: &iter, Password: &password, Marshaler: &DjangoMarshaler}
+	h := SHA512_224Hasher{Salt: &salt, Iter: &iter}
+	h.SetPassword("password")
 
-	w := "sha512_224$1$salt$70617373776f7264"
+	w := string([]byte{0x8a, 0x63, 0xce, 0xaa, 0xc7, 0xf7, 0xb6, 0x9, 0x75, 0xd6, 0x1b, 0xc1, 0xb8, 0xb1, 0xc7, 0x6e, 0xc7, 0xde, 0x6c, 0x2, 0x26, 0xb7, 0xaf, 0x60, 0x63, 0x3e, 0xc5, 0xe})
 	g := h.String()
 	assert.Equal(t, w, g)
 
-	h = SHA512_224Hasher{Salt: &salt, Iter: &iter, Password: &password}
+	h = SHA512_224Hasher{Salt: &salt, Iter: &iter}
 	assert.Panics(t, assert.PanicTestFunc(func() {
 		_ = h.String()
 	}))
@@ -25,8 +25,8 @@ func TestSHA512_224Hasher_String(t *testing.T) {
 func TestSHA512_224Hasher_Check(t *testing.T) {
 	salt := "salt"
 	iter := 1
-	password := []byte{0x8a, 0x63, 0xce, 0xaa, 0xc7, 0xf7, 0xb6, 0x9, 0x75, 0xd6, 0x1b, 0xc1, 0xb8, 0xb1, 0xc7, 0x6e, 0xc7, 0xde, 0x6c, 0x2, 0x26, 0xb7, 0xaf, 0x60, 0x63, 0x3e, 0xc5, 0xe}
-	h := SHA512_224Hasher{Salt: &salt, Iter: &iter, Password: &password}
+	h := SHA512_224Hasher{Salt: &salt, Iter: &iter}
+	h.SetPassword("password")
 
 	check := h.Check("password")
 	assert.Truef(t, check, "Passwords are equal")

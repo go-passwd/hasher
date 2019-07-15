@@ -87,7 +87,15 @@ func Register(code string, hshr NewHasherFunc) error {
 }
 
 // New returns new hasher of type hasherType
-func New(hasherType string, iterations *int, salt *string, hashedPassword *[]byte) (Hasher, error) {
+func New(hasherType string) (Hasher, error) {
+	if registeredHashers[hasherType] != nil {
+		return registeredHashers[hasherType](nil, nil, nil), nil
+	}
+	return nil, fmt.Errorf("Unsupported hasher %s", hasherType)
+}
+
+// NewWithParams returns new hasher of type hasherType and set hasher params
+func NewWithParams(hasherType string, iterations *int, salt *string, hashedPassword *[]byte) (Hasher, error) {
 	if registeredHashers[hasherType] != nil {
 		return registeredHashers[hasherType](iterations, salt, hashedPassword), nil
 	}

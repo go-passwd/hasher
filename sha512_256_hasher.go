@@ -14,6 +14,15 @@ type SHA512_256Hasher struct {
 	Password *[]byte
 }
 
+// NewSHA512_256Hasher returns a new plain hasher instance
+func NewSHA512_256Hasher(iterations *int, salt *string, hashedPassword *[]byte) Hasher {
+	return &SHA512_256Hasher{
+		Iter:     iterations,
+		Salt:     salt,
+		Password: hashedPassword,
+	}
+}
+
 // Code returns internal SHA-512/256 hasher code
 func (h SHA512_256Hasher) Code() string {
 	return TypeSHA512_256

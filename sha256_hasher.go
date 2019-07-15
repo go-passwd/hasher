@@ -14,6 +14,15 @@ type SHA256Hasher struct {
 	Password *[]byte
 }
 
+// NewSHA256Hasher returns a new plain hasher instance
+func NewSHA256Hasher(iterations *int, salt *string, hashedPassword *[]byte) Hasher {
+	return &SHA256Hasher{
+		Iter:     iterations,
+		Salt:     salt,
+		Password: hashedPassword,
+	}
+}
+
 // Code returns internal SHA-224 hasher code
 func (h SHA256Hasher) Code() string {
 	return TypeSHA256

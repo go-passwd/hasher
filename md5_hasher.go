@@ -14,6 +14,15 @@ type MD5Hasher struct {
 	Password *[]byte
 }
 
+// NewMD5Hasher returns a new MD5 hasher instance
+func NewMD5Hasher(iterations *int, salt *string, hashedPassword *[]byte) Hasher {
+	return &MD5Hasher{
+		Iter:     iterations,
+		Salt:     salt,
+		Password: hashedPassword,
+	}
+}
+
 // Code returns internal MD5 hasher code
 func (h MD5Hasher) Code() string {
 	return TypeMD5

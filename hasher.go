@@ -65,69 +65,15 @@ type NewHasherFunc func(iterations *int, salt *string, hashedPassword *[]byte) H
 var (
 	// Internal map of registered hashers
 	registeredHashers = map[string]NewHasherFunc{
-		TypePlain: NewHasherFunc(func(iterations *int, salt *string, hashedPassword *[]byte) Hasher {
-			return &PlainHasher{
-				Iter:     iterations,
-				Salt:     salt,
-				Password: hashedPassword,
-			}
-		}),
-		TypeMD5: NewHasherFunc(func(iterations *int, salt *string, hashedPassword *[]byte) Hasher {
-			return &MD5Hasher{
-				Iter:     iterations,
-				Salt:     salt,
-				Password: hashedPassword,
-			}
-		}),
-		TypeSHA1: NewHasherFunc(func(iterations *int, salt *string, hashedPassword *[]byte) Hasher {
-			return &SHA1Hasher{
-				Iter:     iterations,
-				Salt:     salt,
-				Password: hashedPassword,
-			}
-		}),
-		TypeSHA224: NewHasherFunc(func(iterations *int, salt *string, hashedPassword *[]byte) Hasher {
-			return &SHA224Hasher{
-				Iter:     iterations,
-				Salt:     salt,
-				Password: hashedPassword,
-			}
-		}),
-		TypeSHA256: NewHasherFunc(func(iterations *int, salt *string, hashedPassword *[]byte) Hasher {
-			return &SHA256Hasher{
-				Iter:     iterations,
-				Salt:     salt,
-				Password: hashedPassword,
-			}
-		}),
-		TypeSHA384: NewHasherFunc(func(iterations *int, salt *string, hashedPassword *[]byte) Hasher {
-			return &SHA384Hasher{
-				Iter:     iterations,
-				Salt:     salt,
-				Password: hashedPassword,
-			}
-		}),
-		TypeSHA512: NewHasherFunc(func(iterations *int, salt *string, hashedPassword *[]byte) Hasher {
-			return &SHA512Hasher{
-				Iter:     iterations,
-				Salt:     salt,
-				Password: hashedPassword,
-			}
-		}),
-		TypeSHA512_224: NewHasherFunc(func(iterations *int, salt *string, hashedPassword *[]byte) Hasher {
-			return &SHA512_224Hasher{
-				Iter:     iterations,
-				Salt:     salt,
-				Password: hashedPassword,
-			}
-		}),
-		TypeSHA512_256: NewHasherFunc(func(iterations *int, salt *string, hashedPassword *[]byte) Hasher {
-			return &SHA512_256Hasher{
-				Iter:     iterations,
-				Salt:     salt,
-				Password: hashedPassword,
-			}
-		}),
+		TypePlain:      NewHasherFunc(NewPlainHasher),
+		TypeMD5:        NewHasherFunc(NewMD5Hasher),
+		TypeSHA1:       NewHasherFunc(NewSHA1Hasher),
+		TypeSHA224:     NewHasherFunc(NewSHA224Hasher),
+		TypeSHA256:     NewHasherFunc(NewSHA256Hasher),
+		TypeSHA384:     NewHasherFunc(NewSHA384Hasher),
+		TypeSHA512:     NewHasherFunc(NewSHA512Hasher),
+		TypeSHA512_224: NewHasherFunc(NewSHA512_224Hasher),
+		TypeSHA512_256: NewHasherFunc(NewSHA512_256Hasher),
 	}
 )
 

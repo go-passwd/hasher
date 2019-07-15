@@ -11,6 +11,15 @@ type PlainHasher struct {
 	Password *[]byte
 }
 
+// NewPlainHasher returns a new plain hasher instance
+func NewPlainHasher(iterations *int, salt *string, hashedPassword *[]byte) Hasher {
+	return &PlainHasher{
+		Iter:     iterations,
+		Salt:     salt,
+		Password: hashedPassword,
+	}
+}
+
 // Code returns internal plain hasher code
 func (h PlainHasher) Code() string {
 	return TypePlain

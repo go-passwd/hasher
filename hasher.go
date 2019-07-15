@@ -60,37 +60,73 @@ type Hasher interface {
 }
 
 // NewHasherFunc describes function that returns new hasher
-type NewHasherFunc func() Hasher
+type NewHasherFunc func(iterations *int, salt *string, hashedPassword *[]byte) Hasher
 
 var (
 	// Internal map of registered hashers
 	registeredHashers = map[string]NewHasherFunc{
-		TypePlain: NewHasherFunc(func() Hasher {
-			return &PlainHasher{}
+		TypePlain: NewHasherFunc(func(iterations *int, salt *string, hashedPassword *[]byte) Hasher {
+			return &PlainHasher{
+				Iter:     iterations,
+				Salt:     salt,
+				Password: hashedPassword,
+			}
 		}),
-		TypeMD5: NewHasherFunc(func() Hasher {
-			return &MD5Hasher{}
+		TypeMD5: NewHasherFunc(func(iterations *int, salt *string, hashedPassword *[]byte) Hasher {
+			return &MD5Hasher{
+				Iter:     iterations,
+				Salt:     salt,
+				Password: hashedPassword,
+			}
 		}),
-		TypeSHA1: NewHasherFunc(func() Hasher {
-			return &SHA1Hasher{}
+		TypeSHA1: NewHasherFunc(func(iterations *int, salt *string, hashedPassword *[]byte) Hasher {
+			return &SHA1Hasher{
+				Iter:     iterations,
+				Salt:     salt,
+				Password: hashedPassword,
+			}
 		}),
-		TypeSHA224: NewHasherFunc(func() Hasher {
-			return &SHA224Hasher{}
+		TypeSHA224: NewHasherFunc(func(iterations *int, salt *string, hashedPassword *[]byte) Hasher {
+			return &SHA224Hasher{
+				Iter:     iterations,
+				Salt:     salt,
+				Password: hashedPassword,
+			}
 		}),
-		TypeSHA256: NewHasherFunc(func() Hasher {
-			return &SHA256Hasher{}
+		TypeSHA256: NewHasherFunc(func(iterations *int, salt *string, hashedPassword *[]byte) Hasher {
+			return &SHA256Hasher{
+				Iter:     iterations,
+				Salt:     salt,
+				Password: hashedPassword,
+			}
 		}),
-		TypeSHA384: NewHasherFunc(func() Hasher {
-			return &SHA384Hasher{}
+		TypeSHA384: NewHasherFunc(func(iterations *int, salt *string, hashedPassword *[]byte) Hasher {
+			return &SHA384Hasher{
+				Iter:     iterations,
+				Salt:     salt,
+				Password: hashedPassword,
+			}
 		}),
-		TypeSHA512: NewHasherFunc(func() Hasher {
-			return &SHA512Hasher{}
+		TypeSHA512: NewHasherFunc(func(iterations *int, salt *string, hashedPassword *[]byte) Hasher {
+			return &SHA512Hasher{
+				Iter:     iterations,
+				Salt:     salt,
+				Password: hashedPassword,
+			}
 		}),
-		TypeSHA512_224: NewHasherFunc(func() Hasher {
-			return &SHA512_224Hasher{}
+		TypeSHA512_224: NewHasherFunc(func(iterations *int, salt *string, hashedPassword *[]byte) Hasher {
+			return &SHA512_224Hasher{
+				Iter:     iterations,
+				Salt:     salt,
+				Password: hashedPassword,
+			}
 		}),
-		TypeSHA512_256: NewHasherFunc(func() Hasher {
-			return &SHA512_256Hasher{}
+		TypeSHA512_256: NewHasherFunc(func(iterations *int, salt *string, hashedPassword *[]byte) Hasher {
+			return &SHA512_256Hasher{
+				Iter:     iterations,
+				Salt:     salt,
+				Password: hashedPassword,
+			}
 		}),
 	}
 )
@@ -105,9 +141,9 @@ func Register(code string, hshr NewHasherFunc) error {
 }
 
 // New returns new hasher of type hasherType
-func New(hasherType string) (Hasher, error) {
+func New(hasherType string, iterations *int, salt *string, hashedPassword *[]byte) (Hasher, error) {
 	if registeredHashers[hasherType] != nil {
-		return registeredHashers[hasherType](), nil
+		return registeredHashers[hasherType](iterations, salt, hashedPassword), nil
 	}
 	return nil, fmt.Errorf("Unsupported hasher %s", hasherType)
 }
